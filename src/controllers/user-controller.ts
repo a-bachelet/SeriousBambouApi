@@ -2,6 +2,7 @@
  * Dependencies Imports
  */
 import { Request, Response } from 'express';
+import * as formidable from 'formidable';
 import { MongoError } from 'mongodb';
 
 /**
@@ -20,6 +21,7 @@ import { User, UserModel } from '../models/user';
  * Abstract Classes Imports
  */
 import { AbstractController } from '../abstract/abstract-controller';
+import { Picture, PictureModel } from '../models/picture';
 
 /**
  * UserController Class Definition
@@ -29,7 +31,8 @@ export class UserController extends AbstractController {
     protected routes: IRoute[] = [
         { method: 'GET', path: '/', callable: this.getUsers, middlewares: [] },
         { method: 'GET', path: '/:id', callable: this.getUser, middlewares: [] },
-        { method: 'GET', path: '/:id/level', callable: this.getUserLevel, middlewares: [] }
+        { method: 'GET', path: '/:id/level', callable: this.getUserLevel, middlewares: [] },
+        { method: 'POST', path: '/:id/profilepic', callable: this.postUserProfilePic, middlewares: [] }
     ]; // Controller routes
 
     /**
@@ -88,6 +91,40 @@ export class UserController extends AbstractController {
                         });
                     });
                 }
+            }
+        });
+    }
+
+    /**
+     * Defines a photo as the user profile pic
+     * @param req (Request) Incoming express request
+     * @param res (Response) Outgoing express response
+     */
+    private postUserProfilePic(req: Request, res: Response): void {
+        const form = new formidable.IncomingForm();
+        form.keepExtensions = true;
+        form.multiples = false;
+        form.uploadDir = './public/uploads';
+        form.on('profile', (name, field) => {
+            console.log('Got file : ' + name.message);
+        });
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                res.status(500).send('Internal server error.');
+            } else {
+                let file: any = null;
+                for (const oldFile in files) {
+                    if (files[oldFile]) {
+                        file = files[oldFile];
+                    }
+                }
+                Picture.create(file, (errPic: MongoError, picture: PictureModel) => {
+                    if (err) {
+                        res.status(500).send({ message: 'Internal server error.' });
+                    } else {
+                        res.status(200).send(picture);
+                    }
+                });
             }
         });
     }

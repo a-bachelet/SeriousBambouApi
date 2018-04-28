@@ -20,6 +20,7 @@ import { Theme, ThemeModel } from '../models/theme';
  * Abstract Classes Imports
  */
 import { AbstractController } from '../abstract/abstract-controller';
+import { AuthMiddleware } from '../middlewares/auth-middleware';
 
 /**
  * ThemeController Class Definition
@@ -27,9 +28,9 @@ import { AbstractController } from '../abstract/abstract-controller';
 export class ThemeController extends AbstractController {
 
     protected routes: IRoute[] = [
-        { method: 'GET', path: '/', callable: this.getThemes, middlewares: [] },
-        { method: 'GET', path: '/:id', callable: this.getTheme, middlewares: [] },
-        { method: 'GET', path: '/:id/quizzs', callable: this.getThemeQuizzs, middlewares: [] }
+        { method: 'GET', path: '/', callable: this.getThemes, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id', callable: this.getTheme, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id/quizzs', callable: this.getThemeQuizzs, middlewares: [AuthMiddleware] }
     ]; // Controller routes
 
     /**

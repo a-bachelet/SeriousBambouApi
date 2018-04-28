@@ -20,6 +20,7 @@ import { Quizz, QuizzModel } from '../models/quizz';
  * Abstract Classes Imports
  */
 import { AbstractController } from '../abstract/abstract-controller';
+import { AuthMiddleware } from '../middlewares/auth-middleware';
 
 /**
  * QuizzController Class Definition
@@ -27,9 +28,9 @@ import { AbstractController } from '../abstract/abstract-controller';
 export class QuizzController extends AbstractController {
 
     protected routes: IRoute[] = [
-        { method: 'GET', path: '/', callable: this.getQuizzs, middlewares: [] },
-        { method: 'GET', path: '/:id', callable: this.getQuizz, middlewares: [] },
-        { method: 'GET', path: '/:id/questions', callable: this.getQuizzQuestions, middlewares: [] }
+        { method: 'GET', path: '/', callable: this.getQuizzs, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id', callable: this.getQuizz, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id/questions', callable: this.getQuizzQuestions, middlewares: [AuthMiddleware] }
     ]; // Controller routes
 
     /**

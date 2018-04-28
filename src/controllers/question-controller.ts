@@ -19,6 +19,7 @@ import { Question, QuestionModel } from '../models/question';
  * Abstract Classes Imports
  */
 import { AbstractController } from '../abstract/abstract-controller';
+import { AuthMiddleware } from '../middlewares/auth-middleware';
 
 /**
  * QuestionController Class Definition
@@ -26,8 +27,8 @@ import { AbstractController } from '../abstract/abstract-controller';
 export class QuestionController extends AbstractController {
 
     protected routes: IRoute[] = [
-        { method: 'GET', path: '/', callable: this.getQuestions, middlewares: [] },
-        { method: 'GET', path: '/:id', callable: this.getQuestion, middlewares: [] }
+        { method: 'GET', path: '/', callable: this.getQuestions, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id', callable: this.getQuestion, middlewares: [AuthMiddleware] }
     ]; // Controller routes
 
     /**

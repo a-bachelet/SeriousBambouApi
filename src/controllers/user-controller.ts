@@ -23,6 +23,7 @@ import { User, UserModel } from '../models/user';
  */
 import { AbstractController } from '../abstract/abstract-controller';
 import { Picture, PictureModel } from '../models/picture';
+import { AuthMiddleware } from '../middlewares/auth-middleware';
 
 /**
  * UserController Class Definition
@@ -30,10 +31,10 @@ import { Picture, PictureModel } from '../models/picture';
 export class UserController extends AbstractController {
 
     protected routes: IRoute[] = [
-        { method: 'GET', path: '/', callable: this.getUsers, middlewares: [] },
-        { method: 'GET', path: '/:id', callable: this.getUser, middlewares: [] },
-        { method: 'GET', path: '/:id/level', callable: this.getUserLevel, middlewares: [] },
-        { method: 'POST', path: '/:id/profilepic', callable: this.postUserProfilePic, middlewares: [] }
+        { method: 'GET', path: '/', callable: this.getUsers, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id', callable: this.getUser, middlewares: [AuthMiddleware] },
+        { method: 'GET', path: '/:id/level', callable: this.getUserLevel, middlewares: [AuthMiddleware] },
+        { method: 'POST', path: '/:id/profilepic', callable: this.postUserProfilePic, middlewares: [AuthMiddleware] }
     ]; // Controller routes
 
     /**

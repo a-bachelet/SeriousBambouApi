@@ -2,13 +2,18 @@
  * Dependencies Imports
  */
 import { Document, model, Model, Schema } from 'mongoose';
+import { PictureModel } from './picture';
 
 /**
  * UserModel Type Definition
  */
 export type UserModel = Document & {
     username: string;
+    password: string;
+    validUntil: Date;
+    authToken: string;
     exp: number;
+    profilepic: PictureModel;
 };
 
 /**
@@ -16,7 +21,14 @@ export type UserModel = Document & {
  */
 const userSchema: Schema = new Schema({
     username: String,
-    exp: Number
+    password: String,
+    validUntil: Date,
+    authToken: String,
+    exp: Number,
+    profilepic: {
+        type: Schema.Types.ObjectId,
+        ref: 'Picture'
+    }
 });
 
 /**

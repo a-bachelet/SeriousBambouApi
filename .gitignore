@@ -2,3 +2,4 @@
 .tscache
 dist
 node_modules
+/public

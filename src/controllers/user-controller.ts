@@ -13,6 +13,7 @@ import { IRoute } from '../interfaces/i-route';
 /**
  * Models Imports
  */
+import { Level, LevelModel } from '../models/level';
 import { User, UserModel } from '../models/user';
 
 /**
@@ -50,6 +51,18 @@ export class UserController extends AbstractController {
         const id: number = req.params.id;
         User.findOne({ _id: id }, (err: MongoError, user: UserModel) => {
             res.send(user);
+        });
+    }
+
+    /**
+     * Returns one user found in the database
+     * @param req (Request) Incoming express request
+     * @param res (Response) Outgoing express response
+     */
+    private getLevel(req: Request, res: Response): void {
+        const xp: number = req.params.xp;
+        Level.find({}, (err: MongoError, levels: LevelModel[]) => {
+            res.send(levels);
         });
     }
 

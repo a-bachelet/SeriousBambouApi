@@ -6,11 +6,8 @@ import { Document, model, Model, Schema } from 'mongoose';
 /**
  * Models import
  */
-
- import { Quizz, QuizzModel } from './quizz';
- import { User, UserModel } from './user';
- 
- 
+import { Quizz, QuizzModel } from './quizz';
+import { User, UserModel } from './user';
 
 /**
  * PlayModel Type Definition

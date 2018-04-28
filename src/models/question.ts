@@ -7,7 +7,7 @@ import { Document, model, Model, Schema } from 'mongoose';
  * Models import
  */
 
- import { Quizz, QuizzModel } from './quizz';
+import { Quizz, QuizzModel } from './quizz';
 
 /**
  * QuestionModel Type Definition

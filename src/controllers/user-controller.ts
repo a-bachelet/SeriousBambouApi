@@ -56,22 +56,31 @@ export class UserController extends AbstractController {
     }
 
     /**
-     * Returns one user found in the database
+     * Returns the level of a user
      * @param req (Request) Incoming express request
      * @param res (Response) Outgoing express response
      */
     private getLevel(req: Request, res: Response): void {
-        Level.find({}, (err: MongoError, levels: LevelModel[]) => {
-            User.findOne( { _id : req.params.id}, (err: MongoError, user: UserModel) => {
-                levels.forEach(level => {
-                    let storedLevel = "";
-                    if (user.exp && user.exp > level.reqExp) {
-                        storedLevel = level.label;
-                    } else {
-                        res.send(storedLevel ? storedLevel : level.label);
-                    }
-                })
-            });
+        const id: string = req.params.id;
+        User.findOne({ _id: id }, (err: MongoError, user: UserModel) => {
+            if (err) {
+                res.status(500).send({ message: 'Internal server error.' });
+            } else {
+                if (!user) {
+                    res.status(404).send({ message: 'User not found.' });
+                } else {
+                    Level.find({}, (lvlErr: MongoError, levels: LevelModel[]) => {
+                        levels.forEach((level: LevelModel) => {
+                            let storedLevel: LevelModel | null = null;
+                            if (user.exp > level.reqExp) {
+                                storedLevel = level;
+                            } else {
+                                res.send(storedLevel ? storedLevel : level);
+                            }
+                        });
+                    });
+                }
+            }
         });
     }
 

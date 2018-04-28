@@ -1,10 +1,4 @@
 /**
- * Dependencies Imports
- */
-import { genSaltSync, hashSync } from 'bcrypt-nodejs';
-import * as md5 from 'md5';
-
-/**
  * Models Imports
  */
 import { User, UserModel } from '../models/user';

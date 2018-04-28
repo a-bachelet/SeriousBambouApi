@@ -10,6 +10,7 @@ import { connect, connection } from 'mongoose';
 /**
  * Fixtures Imports
  */
+import { LevelFixture } from '../fixtures/level-fixture';
 import { UserFixture } from '../fixtures/user-fixture';
 
 /**
@@ -31,6 +32,7 @@ const references: Array<{ label: string, document: Document }> = [];
  * Fixtures instanciation
  */
 const fixtures: AbstractFixture[] = [
+    new LevelFixture(references),
     new UserFixture(references)
 ];
 

@@ -10,12 +10,16 @@ import { connect, connection } from 'mongoose';
 /**
  * Fixtures Imports
  */
+import { LevelFixture } from '../fixtures/level-fixture';
+import { QuizzFixture } from '../fixtures/quizz-fixture';
+import { ThemeFixture } from '../fixtures/theme-fixture';
 import { UserFixture } from '../fixtures/user-fixture';
 
 /**
  * Abstract Classes Imports
  */
 import { AbstractFixture } from '../abstract/abstract-fixture';
+import { QuestionFixture } from '../fixtures/question-fixture';
 
 /**
  * Environment Vars Configuration
@@ -31,6 +35,10 @@ const references: Array<{ label: string, document: Document }> = [];
  * Fixtures instanciation
  */
 const fixtures: AbstractFixture[] = [
+    new LevelFixture(references),
+    new QuestionFixture(references),
+    new QuizzFixture(references),
+    new ThemeFixture(references),
     new UserFixture(references)
 ];
 

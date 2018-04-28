@@ -1,4 +1,9 @@
 /**
+ * Dependencies Imports
+ */
+import * as bcrypt from 'bcrypt-nodejs';
+
+/**
  * Models Imports
  */
 import { User, UserModel } from '../models/user';
@@ -22,6 +27,9 @@ export class UserFixture extends AbstractFixture {
 
             const userMikeTyson: UserModel = await User.create({
                 username: 'mike-tyson@gmail.com',
+                password: bcrypt.hashSync('hackathon2018'),
+                validUntil: new Date(),
+                authToken: null,
                 exp: 0
             });
 

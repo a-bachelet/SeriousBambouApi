@@ -7,6 +7,7 @@ import { AbstractRouter } from '../abstract/abstract-router';
 /**
  * Controllers Imports
  */
+import { AuthController } from '../controllers/auth-controller';
 import { QuestionController } from '../controllers/question-controller';
 import { QuizzController } from '../controllers/quizz-controller';
 import { ThemeController } from '../controllers/theme-controller';
@@ -23,6 +24,7 @@ export class ApiRouter extends AbstractRouter {
      */
     protected getControllers(): AbstractController[] {
         return [
+            new AuthController('/auth'),
             new QuestionController('/questions'),
             new QuizzController('/quizzs'),
             new ThemeController('/themes'),

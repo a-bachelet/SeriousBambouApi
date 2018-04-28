@@ -28,7 +28,8 @@ export class UserController extends AbstractController {
 
     protected routes: IRoute[] = [
         { method: 'GET', path: '/', callable: this.getUsers, middlewares: [] },
-        { method: 'GET', path: '/:id', callable: this.getUser, middlewares: [] }
+        { method: 'GET', path: '/:id', callable: this.getUser, middlewares: [] },
+        { method: 'GET', path: '/:id/level', callable: this.getLevel, middlewares: [] }
     ]; // Controller routes
 
     /**
@@ -60,9 +61,17 @@ export class UserController extends AbstractController {
      * @param res (Response) Outgoing express response
      */
     private getLevel(req: Request, res: Response): void {
-        const xp: number = req.params.xp;
         Level.find({}, (err: MongoError, levels: LevelModel[]) => {
-            res.send(levels);
+            User.findOne( { _id : req.params.id}, (err: MongoError, user: UserModel) => {
+                levels.forEach(level => {
+                    let storedLevel = "";
+                    if (user.exp && user.exp > level.reqExp) {
+                        storedLevel = level.label;
+                    } else {
+                        res.send(storedLevel ? storedLevel : level.label);
+                    }
+                })
+            });
         });
     }
 

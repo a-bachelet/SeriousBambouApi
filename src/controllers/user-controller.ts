@@ -29,7 +29,7 @@ export class UserController extends AbstractController {
     protected routes: IRoute[] = [
         { method: 'GET', path: '/', callable: this.getUsers, middlewares: [] },
         { method: 'GET', path: '/:id', callable: this.getUser, middlewares: [] },
-        { method: 'GET', path: '/:id/level', callable: this.getLevel, middlewares: [] }
+        { method: 'GET', path: '/:id/level', callable: this.getUserLevel, middlewares: [] }
     ]; // Controller routes
 
     /**
@@ -51,16 +51,24 @@ export class UserController extends AbstractController {
     private getUser(req: Request, res: Response): void {
         const id: number = req.params.id;
         User.findOne({ _id: id }, (err: MongoError, user: UserModel) => {
-            res.send(user);
+            if (err) {
+                res.status(500).send({ message: 'Internal server error.' });
+            } else {
+                if (!user) {
+                    res.status(404).send({ message: 'User not found.' });
+                } else {
+                    res.send(user);
+                }
+            }
         });
     }
 
     /**
-     * Returns the level of a user
+     * Returns the level of a user found in the database
      * @param req (Request) Incoming express request
      * @param res (Response) Outgoing express response
      */
-    private getLevel(req: Request, res: Response): void {
+    private getUserLevel(req: Request, res: Response): void {
         const id: string = req.params.id;
         User.findOne({ _id: id }, (err: MongoError, user: UserModel) => {
             if (err) {

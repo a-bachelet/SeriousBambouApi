@@ -11,6 +11,8 @@ import { connect, connection } from 'mongoose';
  * Fixtures Imports
  */
 import { LevelFixture } from '../fixtures/level-fixture';
+import { QuizzFixture } from '../fixtures/quizz-fixture';
+import { ThemeFixture } from '../fixtures/theme-fixture';
 import { UserFixture } from '../fixtures/user-fixture';
 
 /**
@@ -33,6 +35,8 @@ const references: Array<{ label: string, document: Document }> = [];
  */
 const fixtures: AbstractFixture[] = [
     new LevelFixture(references),
+    new QuizzFixture(references),
+    new ThemeFixture(references),
     new UserFixture(references)
 ];
 

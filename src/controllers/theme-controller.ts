@@ -13,6 +13,7 @@ import { IRoute } from '../interfaces/i-route';
 /**
  * Models Imports
  */
+import { Quizz, QuizzModel } from '../models/quizz';
 import { Theme, ThemeModel } from '../models/theme';
 
 /**
@@ -27,7 +28,8 @@ export class ThemeController extends AbstractController {
 
     protected routes: IRoute[] = [
         { method: 'GET', path: '/', callable: this.getThemes, middlewares: [] },
-        { method: 'GET', path: '/:id', callable: this.getTheme, middlewares: [] }
+        { method: 'GET', path: '/:id', callable: this.getTheme, middlewares: [] },
+        { method: 'GET', path: '/:id/quizzs', callable: this.getThemeQuizzs, middlewares: [] }
     ]; // Controller routes
 
     /**
@@ -58,6 +60,18 @@ export class ThemeController extends AbstractController {
                     res.send(theme);
                 }
             }
+        });
+    }
+
+    /**
+     * Returns one quizz found in the database
+     * @param req (Request) Incoming express request
+     * @param res (Response) Outgoing express response
+     */
+    private getThemeQuizzs(req: Request, res: Response): void {
+        const id: number = req.params.id;
+        Quizz.find({ theme : id}, (err: MongoError, quizzs: QuizzModel[]) => {
+            res.send(quizzs);
         });
     }
 

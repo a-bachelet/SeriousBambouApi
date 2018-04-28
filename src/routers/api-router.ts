@@ -7,11 +7,11 @@ import { AbstractRouter } from '../abstract/abstract-router';
 /**
  * Controllers Imports
  */
+import { QuestionController } from '../controllers/question-controller';
 import { QuizzController } from '../controllers/quizz-controller';
 import { ThemeController } from '../controllers/theme-controller';
 import { UserController } from '../controllers/user-controller';
 import { WelcomeController } from '../controllers/welcome-controller';
-import { QuestionController } from '../controllers/question-controller';
 
 /**
  * ApiRouter Class Definition

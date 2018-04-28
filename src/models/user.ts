@@ -8,6 +8,9 @@ import { Document, model, Model, Schema } from 'mongoose';
  */
 export type UserModel = Document & {
     username: string;
+    password: string;
+    validUntil: Date;
+    authToken: string;
     exp: number;
 };
 
@@ -16,6 +19,9 @@ export type UserModel = Document & {
  */
 const userSchema: Schema = new Schema({
     username: String,
+    password: String,
+    validUntil: Date,
+    authToken: String,
     exp: Number
 });
 

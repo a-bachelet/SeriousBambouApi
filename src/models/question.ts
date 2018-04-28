@@ -7,7 +7,7 @@ import { Document, model, Model, Schema } from 'mongoose';
  * Models import
  */
 
- import { Quizz, QuizzModel } from './quizz.ts';
+ import { Quizz, QuizzModel } from './quizz';
 
 /**
  * QuestionModel Type Definition
@@ -21,7 +21,7 @@ export type QuestionModel = Document & {
  * Question Schema Definition
  */
 const QuestionSchema: Schema = new Schema({
-    label: String
+    label: String,
     quizz: {
         type: Schema.Types.ObjectId,
         ref: 'Quizz'

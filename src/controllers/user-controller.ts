@@ -3,6 +3,7 @@
  */
 import { Request, Response } from 'express';
 import * as formidable from 'formidable';
+import * as fs from 'fs';
 import { MongoError } from 'mongodb';
 
 /**
@@ -101,6 +102,7 @@ export class UserController extends AbstractController {
      * @param res (Response) Outgoing express response
      */
     private postUserProfilePic(req: Request, res: Response): void {
+        const id = req.params.id;
         const form = new formidable.IncomingForm();
         form.keepExtensions = true;
         form.multiples = false;
@@ -122,7 +124,18 @@ export class UserController extends AbstractController {
                     if (err) {
                         res.status(500).send({ message: 'Internal server error.' });
                     } else {
-                        res.status(200).send(picture);
+                        User.findOneAndUpdate(
+                            { _id: id },
+                            { profilepic: picture._id },
+                            {  })
+                            .populate('profilepic')
+                            .exec((errUser: MongoError, user: UserModel | null) => {
+                                if (user) {
+                                    fs.unlinkSync(user.profilepic.path);
+                                    user.profilepic = picture;
+                                }
+                                res.status(200).send(user);
+                        });
                     }
                 });
             }

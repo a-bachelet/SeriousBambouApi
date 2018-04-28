@@ -19,11 +19,15 @@ import { Level, LevelModel } from '../models/level';
 import { User, UserModel } from '../models/user';
 
 /**
+ * Middlewares Imports
+ */
+import { AuthMiddleware } from '../middlewares/auth-middleware';
+
+/**
  * Abstract Classes Imports
  */
 import { AbstractController } from '../abstract/abstract-controller';
 import { Picture, PictureModel } from '../models/picture';
-import { AuthMiddleware } from '../middlewares/auth-middleware';
 
 /**
  * UserController Class Definition
